@@ -76,16 +76,11 @@ func Get(k string) interface{} {
 }
 
 func main() {
-
-	p("Started")
-
-	url := "allegro.pl/dozownik-na-plyn-do-naczyn-pojemnik-na-gabke-wenko-i6924188275.html"
-
+	p("simple test")
+	url := "my key"
 	vvv := map[string]int{"first": 1, "second": 2}
-
 	p1 := Set(url, vvv)
 	p("p=%s", p1)
-
-	html := Get(url)
-	p("html=%v", html)
+	out := Get(url)
+	p("out=%v", out)
 }
