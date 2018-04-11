@@ -1,4 +1,4 @@
-package main
+package dcache
 
 // Simplest disk cache storing strings in /tmp/dcache
 // should be compatible with dcache.js
@@ -73,6 +73,22 @@ func Get(k string) interface{} {
 	var v interface{}
 	err = json.Unmarshal(b, &v)
 	return v
+}
+
+func Memoize1(fun func(string) (string, error), k string) (string, error) {
+	var err error
+	v := GetString(k)
+	if v == "" {
+		v, err = fun(k)
+		if err != nil {
+			return v, err
+		}
+		if v == "" {
+			panic("dcache.Memoize1: memoized function should not return empty string")
+		}
+		SetString(k, v)
+	}
+	return v, nil
 }
 
 func main() {
