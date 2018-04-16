@@ -66,12 +66,13 @@ func Get(k string) interface{} {
 	f := filepath.Join(STORE_DIR, "json_"+hash(k))
 	b, err := ioutil.ReadFile(f)
 	if os.IsNotExist(err) {
-		return ""
+		return nil
 	} else if err != nil {
 		panicOn(err)
 	}
 	var v interface{}
 	err = json.Unmarshal(b, &v)
+	panicOn(err)
 	return v
 }
 
